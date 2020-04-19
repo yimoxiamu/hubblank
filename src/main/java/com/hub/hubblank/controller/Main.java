@@ -2,12 +2,18 @@ package com.hub.hubblank.controller;
 
 import com.hub.hubblank.mq.Product;
 import com.hub.hubblank.mq.TestProduce;
+import com.hub.hubblank.service.RegisterService;
 import com.hub.hubblank.service.TestService;
+import com.hub.hubblank.service.impl.EmailRegisterServiceImpl;
+import com.hub.hubblank.service.impl.MobileRegisterServiceImpl;
+import com.hub.hubblank.service.impl.RegisterServiceImpl;
 import com.hub.hubblank.test.MyEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author ybfu3
@@ -24,6 +30,10 @@ public class Main {
     Product product;
     @Autowired
     TestProduce testProduce;
+    @Autowired
+    RegisterServiceImpl registerService;
+//    @Autowired
+//    List<RegisterService> list;
 
     @GetMapping(value = "/test")
     public String test(){
@@ -38,4 +48,8 @@ public class Main {
         product.send(msg);
         testProduce.send(msg+"ceshi");
     }
-}
+
+    @GetMapping(value = "/test2")
+    public String test3(String type){
+        return registerService.executeRegister(type);
+    }}
